@@ -11,6 +11,7 @@ if TYPE_CHECKING:
 
     from litestar.datastructures import URL, Accept, Headers
     from litestar.types.asgi_types import Scope
+    from litestar.types.composite_types import ExceptionHandlersMap
 
 CONNECTION_STATE_KEY: Final = "_ls_connection_state"
 
@@ -33,6 +34,7 @@ class ScopeState:
         "csrf_token",
         "dependency_cache",
         "do_cache",
+        "exception_handlers",
         "flash_messages",
         "form",
         "headers",
@@ -42,6 +44,7 @@ class ScopeState:
         "msgpack",
         "parsed_query",
         "response_compressed",
+        "response_started",
         "session_id",
         "url",
         "_compat_ns",
@@ -56,6 +59,7 @@ class ScopeState:
         self.csrf_token = Empty
         self.dependency_cache = Empty
         self.do_cache = Empty
+        self.exception_handlers = Empty
         self.form = Empty
         self.flash_messages = []
         self.headers = Empty
@@ -65,6 +69,7 @@ class ScopeState:
         self.msgpack = Empty
         self.parsed_query = Empty
         self.response_compressed = Empty
+        self.response_started = False
         self.session_id = Empty
         self.url = Empty
         self._compat_ns: dict[str, Any] = {}
@@ -77,6 +82,7 @@ class ScopeState:
     csrf_token: str | EmptyType
     dependency_cache: dict[str, Any] | EmptyType
     do_cache: bool | EmptyType
+    exception_handlers: ExceptionHandlersMap | EmptyType
     form: dict[str, str | list[str]] | EmptyType
     flash_messages: list[dict[str, str]]
     headers: Headers | EmptyType
@@ -86,6 +92,7 @@ class ScopeState:
     msgpack: Any | EmptyType
     parsed_query: tuple[tuple[str, str], ...] | EmptyType
     response_compressed: bool | EmptyType
+    response_started: bool
     session_id: str | None | EmptyType
     url: URL | EmptyType
     _compat_ns: dict[str, Any]

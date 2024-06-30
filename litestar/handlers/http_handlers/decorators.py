@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import warnings
 from typing import TYPE_CHECKING
 
 from litestar.enums import HttpMethod, MediaType
@@ -43,6 +44,15 @@ if TYPE_CHECKING:
 __all__ = ("get", "head", "post", "put", "patch", "delete")
 
 MSG_SEMANTIC_ROUTE_HANDLER_WITH_HTTP = "semantic route handlers cannot define http_method"
+
+
+def _subclass_warning() -> None:
+    warnings.warn(
+        "Semantic HTTP route handler classes are deprecated and will be replaced by "
+        "functional decorators in Litestar 3.0.",
+        category=DeprecationWarning,
+        stacklevel=2,
+    )
 
 
 class delete(HTTPRouteHandler):
@@ -216,6 +226,9 @@ class delete(HTTPRouteHandler):
             **kwargs,
         )
 
+    def __init_subclass__(cls, **kwargs: Any) -> None:
+        _subclass_warning()
+
 
 class get(HTTPRouteHandler):
     """GET Route Decorator.
@@ -388,6 +401,9 @@ class get(HTTPRouteHandler):
             type_encoders=type_encoders,
             **kwargs,
         )
+
+    def __init_subclass__(cls, **kwargs: Any) -> None:
+        _subclass_warning()
 
 
 class head(HTTPRouteHandler):
@@ -566,6 +582,9 @@ class head(HTTPRouteHandler):
             **kwargs,
         )
 
+    def __init_subclass__(cls, **kwargs: Any) -> None:
+        _subclass_warning()
+
     def _validate_handler_function(self) -> None:
         """Validate the route handler function once it is set by inspecting its return annotations."""
         super()._validate_handler_function()
@@ -577,7 +596,9 @@ class head(HTTPRouteHandler):
             or is_class_and_subclass(return_annotation, File)
             or is_class_and_subclass(return_annotation, ASGIFileResponse)
         ):
-            raise ImproperlyConfiguredException("A response to a head request should not have a body")
+            raise ImproperlyConfiguredException(
+                f"{self}: Handlers for 'HEAD' requests must not return a value. Either return 'None' or a response type without a body."
+            )
 
 
 class patch(HTTPRouteHandler):
@@ -751,6 +772,9 @@ class patch(HTTPRouteHandler):
             **kwargs,
         )
 
+    def __init_subclass__(cls, **kwargs: Any) -> None:
+        _subclass_warning()
+
 
 class post(HTTPRouteHandler):
     """POST Route Decorator.
@@ -923,6 +947,9 @@ class post(HTTPRouteHandler):
             **kwargs,
         )
 
+    def __init_subclass__(cls, **kwargs: Any) -> None:
+        _subclass_warning()
+
 
 class put(HTTPRouteHandler):
     """PUT Route Decorator.
@@ -1094,3 +1121,6 @@ class put(HTTPRouteHandler):
             type_encoders=type_encoders,
             **kwargs,
         )
+
+    def __init_subclass__(cls, **kwargs: Any) -> None:
+        _subclass_warning()

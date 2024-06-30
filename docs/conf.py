@@ -57,7 +57,7 @@ intersphinx_mapping = {
     "tortoise": ("https://tortoise.github.io/", None),
     "piccolo": ("https://piccolo-orm.readthedocs.io/en/latest", None),
     "opentelemetry": ("https://opentelemetry-python.readthedocs.io/en/latest/", None),
-    "advanced-alchemy": ("https://docs.advanced-alchemy.jolt.rs/latest/", None),
+    "advanced-alchemy": ("https://docs.advanced-alchemy.litestar.dev/latest/", None),
     "jinja2": ("https://jinja.palletsprojects.com/en/latest/", None),
     "trio": ("https://trio.readthedocs.io/en/stable/", None),
 }
@@ -171,6 +171,7 @@ nitpick_ignore = [
     (PY_CLASS, "advanced_alchemy.extensions.litestar.config.SQLAlchemySyncConfig"),
     (PY_CLASS, "advanced_alchemy.extensions.litestar.config.SQLAlchemyAsyncConfig"),
     (PY_METH, "advanced_alchemy.extensions.litestar.plugins.SQLAlchemySerializationPlugin.create_dto_for_type"),
+    (PY_CLASS, "advanced_alchemy.base.BasicAttributes"),
     (PY_CLASS, "advanced_alchemy.config.AsyncSessionConfig"),
     (PY_CLASS, "advanced_alchemy.config.SyncSessionConfig"),
     (PY_CLASS, "advanced_alchemy.types.JsonB"),
@@ -183,6 +184,7 @@ nitpick_ignore = [
     ("py:exc", "HTTPExceptions"),
     (PY_CLASS, "litestar.template.Template"),
     (PY_CLASS, "litestar.middleware.compression.gzip_facade.GzipCompression"),
+    (PY_CLASS, "litestar.handlers.http_handlers.decorators._subclass_warning"),
 ]
 
 nitpick_ignore_regex = [
@@ -234,7 +236,7 @@ ignore_missing_refs = {
     re.compile(r"litestar\.template\.(config|TemplateConfig).*"): re.compile(".*EngineType"),
     "litestar.concurrency.set_asyncio_executor": {"ThreadPoolExecutor"},
     "litestar.concurrency.get_asyncio_executor": {"ThreadPoolExecutor"},
-    re.compile(r"litestar\.channels\.backends\.asyncpg.*"): {"asyncpg.connection.Connection"},
+    re.compile(r"litestar\.channels\.backends\.asyncpg.*"): {"asyncpg.Connection"},
 }
 
 # Do not warn about broken links to the following:
@@ -310,7 +312,7 @@ html_theme_options = {
         "Help": {
             "Discord Help Forum": {
                 "description": "Dedicated Discord help forum",
-                "link": "https://discord.gg/litestar-919193495116337154",
+                "link": "https://discord.gg/litestar",
                 "icon": "coc",
             },
             "GitHub Discussions": {
